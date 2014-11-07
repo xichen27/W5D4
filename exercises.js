@@ -271,40 +271,97 @@ var binarySearch = function(array, target){
 
 //console.log(binarySearch([0, 3, 5, 16, 25, 49, 50], 7))
 
-var Cat = function(name, owner){
-  this.name = name;
-  this.owner = owner;
+// var Cat = function(name, owner){
+//   this.name = name;
+//   this.owner = owner;
+// }
+//
+// Cat.prototype.cuteStatement = function() {
+//   console.log(this.owner + " loves " + this.name);
+// }
+//
+// var cat1 = new Cat("Gizmo", "Ned");
+// var cat2 = new Cat("Berry", "Aaron");
+//
+// // cat1.cuteStatement();
+//
+// Cat.prototype.cuteStatement = function(){
+//   console.log("Everyone loves " + this.name + "!");
+// }
+//
+// // cat1.cuteStatement();
+//
+// Cat.prototype.meow = function(){
+//   console.log(this.name + " meows");
+// }
+//
+// cat1.meow();
+//
+// cat2.meow = function(){
+//   console.log(this.name + " meows!!");
+// }
+//
+//
+//
+// cat2.meow();
+// cat1.meow();
+
+//Make change
+
+var makeChange = function(amount, array){
+  var result = []
+  if (amount == 0){
+    return result;
+  } 
+  while (amount >= array[0]){
+    amount -= array[0];
+    result.push(array[0])
+  }
+  return result.concat(makeChange(amount, array.slice(1, array.length)))
 }
 
-Cat.prototype.cuteStatement = function() {
-  console.log(this.owner + " loves " + this.name);
-}
+// console.log(makeChange(14, [10, 7, 1]))
+
+var makeChange2 = function(amount, array){
+  var result = []
+  if (amount == 0){
+    return result;
+  } 
   
-var cat1 = new Cat("Gizmo", "Ned");
-var cat2 = new Cat("Berry", "Aaron");
-
-// cat1.cuteStatement();
-
-Cat.prototype.cuteStatement = function(){
-  console.log("Everyone loves " + this.name + "!");
-}
-
-// cat1.cuteStatement();
-
-Cat.prototype.meow = function(){
-  console.log(this.name + " meows");
-}
-
-cat1.meow();
-
-cat2.meow = function(){
-  console.log(this.name + " meows!!");
+  if (amount >= array[0]){
+    amount -= array[0];
+    result.push(array[0])
+    return result.concat(makeChange(amount, array))
+  } else {
+    return result.concat(makeChange(amount, array.slice(1, array.length))) 
+  }
 }
 
 
+//console.log(makeChange2(14, [10, 7, 1]))
 
-cat2.meow();
-cat1.meow();
+var makeChange3 = function(amount, array){
+  var result = []
+  if (amount == 0){
+    return result;
+  }
+  var current_best = 100;
+  for (var i = 0; i < array.length; i++){
+    if(amount >= array[i]){
+      amount -= array[i];
+      if (makeChange3(amount, array).length < current_best){
+        result.push(array[i]);
+        current_best = makeChange3(amount, array).length
+        return result.concat(makeChange3(amount, array))
+      }
+    }
+  } 
+  return result;
+}
+
+console.log(makeChange3(14, [10, 7, 1]))
+
+
 
 
 
